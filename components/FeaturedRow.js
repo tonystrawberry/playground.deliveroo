@@ -1,9 +1,30 @@
 import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ArrowRightIcon } from 'react-native-heroicons/outline'
 import RestaurantCard from './RestaurantCard'
+import sanityClient from '../sanity'
 
 const FeaturedRow = ({id, title, description}) => {
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    sanityClient.fetch(
+      `
+        *[_type == 'featured' && _id == $id] {
+          ...,
+          restaurants[] -> {
+            ...,
+            type ->,
+            dishes[] ->
+          }
+        }[0]
+      `,
+      { id }
+    ).then((data) => {
+      setRestaurants(data?.restaurants)
+    })
+  }, [id])
+
   return (
     <View>
       <View className="mt-4 flex-row items-center justify-between px-4">
@@ -23,30 +44,24 @@ const FeaturedRow = ({id, title, description}) => {
         className="pt-4"
       >
         {/* RestaurantCard */}
-        <RestaurantCard
-          id={1}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          shortDescription="Text description yay!"
-          dishes={[]}
-          longitude={20}
-          latitude={0}
-        />
-        <RestaurantCard
-          id={1}
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          shortDescription="Text description yay!"
-          dishes={[]}
-          longitude={20}
-          latitude={0}
-        />
+
+        {
+          restaurants?.map((restaurant) => (
+            <RestaurantCard
+              key={restaurant._id}
+              id={restaurant._id}
+              imgUrl={restaurant.image}
+              title={restaurant.name}
+              rating={restaurant.rating}
+              genre={restaurant.type?.name}
+              address={restaurant.address}
+              shortDescription={restaurant.short_description}
+              dishes={restaurant.dishes}
+              longitude={restaurant.longitude}
+              latitude={restaurant.latitude}
+            />
+          ))
+        }
       </ScrollView>
     </View>
   )
