@@ -46,8 +46,7 @@ const FeaturedRow = ({id, title, description}) => {
         {/* RestaurantCard */}
 
         {
-          restaurants?.map((restaurant) => (
-            <RestaurantCard
+          restaurants?.map((restaurant) => (<RestaurantCard
               key={restaurant._id}
               id={restaurant._id}
               imgUrl={restaurant.image}
@@ -57,8 +56,8 @@ const FeaturedRow = ({id, title, description}) => {
               address={restaurant.address}
               shortDescription={restaurant.short_description}
               dishes={restaurant.dishes}
-              longitude={restaurant.longitude}
-              latitude={restaurant.latitude}
+              longitude={restaurant.long}
+              latitude={restaurant.lat}
             />
           ))
         }

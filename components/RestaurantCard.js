@@ -17,7 +17,6 @@ export default function RestaurantCard({
   longitude,
   latitude
 }) {
-
   const navigation = useNavigation();
 
   return (
