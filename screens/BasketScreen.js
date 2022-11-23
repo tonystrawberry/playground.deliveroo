@@ -13,17 +13,17 @@ const BasketScreen = () => {
   const restaurant = useSelector(selectRestaurant)
   const items = useSelector(selectBasketItems)
   const basketTotal = useSelector(selectTotalPrice)
-  const [groupedItemsInBasket, setGroupedItemsInBasket] = useState([])
+  const [ groupedItemsInBasket, setGroupedItemsInBasket ] = useState([])
   const dispatch = useDispatch()
 
   useMemo(() => {
     const groupedItems = items.reduce((results, item) => {
-      (results[item.id] = results[item.id] || []).push(item)
+      (results[ item.id ] = results[ item.id ] || []).push(item)
       return results
     }, {})
 
     setGroupedItemsInBasket(groupedItems)
-  }, [items])
+  }, [ items ])
 
   return (
     <SafeAreaView className="flex-1">
@@ -31,7 +31,7 @@ const BasketScreen = () => {
         <View className="p-5 border-b border-[#00CCBB] bg-white shadow-xs">
           <View>
             <Text className="text-lg font-bold text-center">Basket</Text>
-            <Text className="text-center text-gray-400">{ restaurant.title }</Text>
+            <Text className="text-center text-gray-400">{restaurant.title}</Text>
           </View>
         </View>
 
@@ -52,14 +52,14 @@ const BasketScreen = () => {
       </View>
 
       <ScrollView className="divide-y divide-gray-200">
-        { Object.entries(groupedItemsInBasket).map(([key, items]) => (
+        {Object.entries(groupedItemsInBasket).map(([ key, items ]) => (
           <View key={key} className="flex-row items-center space-x-3 bg-white py-2 px-5">
-            <Text className="text-[#00CCBB]">{ items.length } x</Text>
-            <Image source={{ uri: urlFor(items[0].image).url() }} className="h-12 w-12 rounded-full" />
-            <Text className="flex-1">{ items[0]?.name }</Text>
+            <Text className="text-[#00CCBB]">{items.length} x</Text>
+            <Image source={{ uri: urlFor(items[ 0 ].image).url() }} className="h-12 w-12 rounded-full" />
+            <Text className="flex-1">{items[ 0 ]?.name}</Text>
 
             <Text className="text-gray-600">
-              <Currency quantity={items[0]?.price} currency="GBP" />
+              <Currency quantity={items[ 0 ]?.price} currency="GBP" />
             </Text>
 
             <TouchableOpacity>

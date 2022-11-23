@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 
-const CategoryCard = ({imgUrl, title}) => {
+const CategoryCard = ({ imgUrl, title }) => {
   return (
     <TouchableOpacity className="relative mr-2">
       <Image
@@ -11,7 +11,7 @@ const CategoryCard = ({imgUrl, title}) => {
         className="h-20 w-20 rounded"
       />
 
-      <Text className="absolute bottom-1 left-1 text-white fond-bold">{ title }</Text>
+      <Text className="absolute bottom-1 left-1 text-white fond-bold">{title}</Text>
     </TouchableOpacity>
   )
 }

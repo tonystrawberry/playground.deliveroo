@@ -4,7 +4,7 @@ import CategoryCard from './CategoryCard'
 import sanityClient, { urlFor } from '../sanity'
 
 const Categories = () => {
-  const [categories, setCategories] = useState([])
+  const [ categories, setCategories ] = useState([])
 
   useEffect(() => {
     sanityClient.fetch(
